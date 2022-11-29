@@ -1,8 +1,8 @@
 {
-  "name": "@extend-chrome/ts-react-boilerplate",
+  "name": "extension_fake_new_detection",
   "version": "1.0.0",
   "private": true,
-  "description": "Chrome extension boilerplate with TypeScript and React",
+  "description": "a extension fake new detection",
   "keywords": [
     "chrome-extension",
     "web-extension",
@@ -18,6 +18,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/extend-chrome/ts-react-boilerplate.git"
+  },
+  "chrome_url_overrides": {
+    "newtab": "src/pages/popup/App.tsx"
   },
   "license": "MIT",
   "author": "Jack Steam<jacksteamdev@gmail.com>",
@@ -36,6 +39,7 @@
     "prettier": "^2.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "vite-plugin-tailwind": "^0.0.4",
     "webextension-polyfill": "^0.7.0"
   },
   "devDependencies": {
@@ -46,15 +50,18 @@
     "@types/jest": "^26.0.19",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
+    "autoprefixer": "^10.4.12",
     "cross-env": "^7.0.3",
     "eslint": "^7.16.0",
     "eslint-plugin-react": "^7.21.5",
     "jest": "^26.6.3",
     "jest-chrome": "^0.7.0",
+    "postcss": "^8.4.18",
     "rollup": "^2.56.3",
     "rollup-plugin-chrome-extension": "^3.6.1",
     "rollup-plugin-empty-dir": "^1.0.5",
     "rollup-plugin-zip": "^1.0.3",
+    "tailwindcss": "^3.2.1",
     "ts-jest": "^26.4.4",
     "tslib": "^2.0.3",
     "typescript": "^4.1.3"
