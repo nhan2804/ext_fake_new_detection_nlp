@@ -29,14 +29,17 @@ const predict = (model:string) => {
           onChange={(e)=> predict(e?.target?.value)}>
             <option value="NB">Naive Bayes</option>
             <option value="DT">Decision Tree</option>
-            <option value="SVM">Support Vector Machine</option>
-            <option value="RNN">Recurrent Neural Network</option>
+            <option value="SVM">SVM</option>
+            <option value="RNN">LSTM</option>
         </select>
         {rs && <p style={{fontSize: 32, fontWeight:'bold',color:'white'}}>
-        {rs ===  '0' ? 'Real' : rs==='2'  ? 'No Text Selected' : 'Fake'}</p>}
+        {rs.split(";")[0] ===  '0' ? 'Real' : rs.split(";")[0]==='2'  ? 'No Text Selected' : 'Fake'}</p>}
       </div>
+        {rs && <p style={{fontSize: 20, fontWeight:'bold',color:'white'}}>
+        TOPIC: { rs.split(";")[1]}</p>}
         {text && (
-          <><p style={{fontFamily:"monospace",color:'ghostwhite',fontSize: 18}}>
+          <>
+          <p style={{fontFamily:"monospace",color:'ghostwhite',fontSize: 18}}>
             Detect for: {'"'}{text}{'"'}</p></>)}
     </div>
   )
