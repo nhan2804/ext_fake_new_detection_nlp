@@ -46,9 +46,9 @@ const App = (): JSX.Element => {
     )
   })
   const { data: posts, isLoading } = useQuery({
-    queryKey: ['recommned', title],
+    queryKey: ['recommned', text],
     queryFn: async () => {
-      const data = await fetch(`${BASE_URL_BE}api/posts?q=${title}`, {
+      const data = await fetch(`${BASE_URL_BE}api/posts?q=${text}`, {
         method: 'get',
         headers: {
           Accept: 'application/json',
