@@ -1,93 +1,47 @@
 import React, { useEffect, useState } from 'react'
-const BASE_URL = 'http://192.168.1.179:8888/'
+const BASE_URL = 'http://localhost:8888/'
 const App = (): JSX.Element => {
-  // const h = () => {
-  //   chrome.tabs.executeScript(
-  //     {
-  //       code: `(${inContent2})(${JSON.stringify({ foo: 'bar' })})`,
-  //     },
-  //     ([result] = []) => {
-  //       if (!chrome.runtime.lastError) {
-  //         console.log(result) // shown in devtools of the popup window
-  //       } else {
-  //         console.log(chrome.runtime.lastError)
-  //       }
-  //     },
-  //   )
-
-  //   // chrome.tabs.sendMessage(0, { method: 'getSelection' }, function (response) {
-  //   //   sendServiceRequest(response.data)
-  //   // })
-  // }
-  // function inContent2(params: any) {
-  //   const el = document.createElement('div')
-  //   el.style.cssText = 'position:fixed; top:0; left:0; right:0; background:red'
-  //   el.textContent = params.foo
-  //   document.body.appendChild(el)
-  //   return {
-  //     success: true,
-  //     html: document.body.innerHTML,
-  //   }
-  // }
-  const rsMP = {
-    0: 'Real',
-    1: 'Fake',
-  }
-  const [model, setType] = useState('RNN')
-  const [text, setText] = useState()
-  const [rs, setRS] = useState('')
-  console.log({ model })
-
-  const predict = () => {
-    // fetch()
-    // BASE_URL
-    const formData = new FormData()
-    formData.append('text', text || '')
-    formData.append('model', model)
-
+const [text, setText] = useState()
+const [rs, setRS] = useState('')
+const predict = (model:string) => {
+  const formData = new FormData()
+  formData.append('text', text || '')
+  formData.append('model', model)
     fetch(`${BASE_URL}/api/predict`, {
       body: JSON.stringify({ text, model }),
       method: 'post',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.text())
-      .then((data) => setRS(data))
-  }
-
+        'Content-Type': 'application/json',},})
+    .then((response) => response.text())
+    .then((data) => setRS(data))}
   useEffect(() => {
     chrome.tabs.executeScript(
       { code: 'window.getSelection().toString();' },
-      (selectedText) => {
-        setText(selectedText[0])
-      },
-    )
-  })
-
-  console.log({ rs })
-
+      (selectedText) => {setText(selectedText[0])},)})
   return (
-    <div style={{ width: 600 }}>
-      <h1>Detect Fake News</h1>
-      {/* <input id="text-input" /> */}
-
-      <select onChange={(e) => setType(e?.target?.value)}>
-        <option value="NB">Naive Bayes</option>
-        <option value="DT">Decision Tree</option>
-        <option value="SVM">Support Vector Machine</option>
-        <option value="RNN">Recurrent Neural Network</option>
-      </select>
-      <button onClick={predict}>Predict</button>
-      {text && (
-        <>
-          <h3>Detect for : {text}</h3>
-          {rs && <h1>{rs == '0' ? 'Real' : 'Fake'}</h1>}
-        </>
-      )}
+    <div style={{color: '#ffffff',padding: 10,width:350,fontFamily: 'monospace'}}>
+      <p style={{textAlign: "center",fontSize: 32, fontWeight: 'bold'}}>
+        Fake News Detection</p>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-evenly',gap:10}}>
+        <select style={{width: 200,height: 40,fontFamily:"monospace",fontWeight:'bold',fontSize: 18,color:"white",
+          backgroundColor: 'rgba(17, 25, 40, 0.3)',borderRadius: 5,outline:'none',padding: 2,}}
+          onChange={(e)=> predict(e?.target?.value)}>
+            <option value="NB">Naive Bayes</option>
+            <option value="DT">Decision Tree</option>
+            <option value="SVM">SVM</option>
+            <option value="RNN">LSTM</option>
+        </select>
+        {rs && <p style={{fontSize: 32, fontWeight:'bold',color:'white'}}>
+        {rs.split(";")[0] ===  '0' ? 'Real' : rs.split(";")[0]==='2'  ? 'No Text Selected' : 'Fake'}</p>}
+      </div>
+        {rs && <p style={{fontSize: 20, fontWeight:'bold',color:'white'}}>
+        TOPIC: { rs.split(";")[1]}</p>}
+        {text && (
+          <>
+          <p style={{fontFamily:"monospace",color:'ghostwhite',fontSize: 18}}>
+            Detect for: {'"'}{text}{'"'}</p></>)}
     </div>
   )
 }
-
 export default App
