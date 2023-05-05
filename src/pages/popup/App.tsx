@@ -193,10 +193,13 @@ const App = (): JSX.Element => {
             {isLoading ? (
               <Loading color="currentColor" size="sm" />
             ) : (
-              <div className="flex flex-row space-y-2">
-                {posts?.map((e) => {
-                  return <CustomCard {...e} key={e?.id} />
-                })}
+              <div>
+                <h3>Recommend</h3>
+                <div className="flex flex-row space-y-2">
+                  {posts?.map((e) => {
+                    return <CustomCard {...e} key={e?.id} />
+                  })}
+                </div>
               </div>
             )}
           </div>
